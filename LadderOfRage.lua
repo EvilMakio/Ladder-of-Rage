@@ -1,113 +1,81 @@
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Atlas = loadstring(game:HttpGet("https://siegehub.net/Atlas.lua"))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "EVIL",
-   LoadingTitle = "Evil Key System",
-   LoadingSubtitle = "by MakioDev",
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = nil, -- Create a custom folder for your hub/game
-      FileName = "EVIL"
-   },
-   Discord = {
-      Enabled = false,
-      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
-      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
-   },
-   KeySystem = true, -- Set this to true to use our key system
-   KeySettings = {
-      Title = "Untitled",
-      Subtitle = "Key System",
-      Note = "Key: shre.su/V1TT",
-      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"evil299key"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
-   }
+-- by EvilMakio
+-- https://rscripts.net/u/evilmakio
+
+local UI = Atlas.new({
+    Name = "EVIL"; -- script name (required)
+    ConfigFolder = "EVIL"; -- folder name to save configs to, set this to nil if you want to disable configs saving
+    Credit = "Made By EvilMakio"; -- text to appear if player presses the "i" button on their UI (optional)
+    Color = Color3.fromRGB(255,0,0); -- theme color for UI (required)
+    Bind = "LeftControl"; -- keybind for toggling the UI, must be a valid KeyCode name
+    -- Atlas Loader:
+    UseLoader = true; -- whether to use Atlas Loader or not, if set to false than CheckKey and Discord are ignored
+    FullName = "EVIL HUB"; -- works if UseLoader is set to true, can be same as Name argument, shown on loader frame
+    CheckKey = function(inputtedKey) -- works if UseLoader is set to true, where inputtedKey is the key inputted by the player
+        return inputtedKey=="evil299key"
+    end;
+    Discord = "https://link-hub.net/937544/roblox-scipts-mm-2"; -- works if UseLoader is set to true, will be copied to clipboard if player presses "Copy Invite" button
 })
 
-local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
-local Button = Tab:CreateButton({
-   Name = "Teleport WinZone",
-   Callback = function()
-   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Spawns.Winners.CFrame
-   end,
-})
-local Button = Tab:CreateButton({
-   Name = "Teleport SpawnZone",
-   Callback = function()
-   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Spawns.SpawnLocation.CFrame
-   end,
-})
+-- by EvilMakio
+-- https://rscripts.net/u/evilmakio
 
-local Button = Tab:CreateButton({
-   Name = "Sit",
-   Callback = function()
-   game.Players.LocalPlayer.Character.Humanoid.Sit = true
-   end,
+local MyPage = UI:CreatePage("Teleport")
+local MySection = MyPage:CreateSection("Teleport")
+
+MySection:CreateToggle({ -- IMPORTANT: This function does not return anything, please modify flags directly in order to read or update toggle values. SCROLL TO BOTTOM OF PAGE TO SEE HOW TO MODIFY FLAGS
+    Name = "WinTp"; -- required: name of element
+    Flag = "MyToggle1"; -- required: unique flag name to use
+    Default = true; -- optional: default value for toggle, will be used if config saving is disabled and there is no saved data, will be false if left nil
+    Callback = function(newValue) -- optional: function that will be called when toggled, it is reccomended to modify flags directly
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Spawns.Winners.CFrame
+    end;
+    -- Scroll to the bottom of the page to read more about the following two:
+    Warning = "This has a warning"; -- optional: this argument is used in all elements (except for Body) and will indicate text that will appear when the player hovers over the warning icon
+    WarningIcon = 12345; -- optional: ImageAssetId for warning icon, will only be used if Warning is not nil, default is yellow warning icon.
 })
 
-local Button = Tab:CreateButton({
-   Name = "Off Sit",
-   Callback = function()
-   game.Players.LocalPlayer.Character.Humanoid.Sit = false
-   end,
+MySection:CreateToggle({ -- IMPORTANT: This function does not return anything, please modify flags directly in order to read or update toggle values. SCROLL TO BOTTOM OF PAGE TO SEE HOW TO MODIFY FLAGS
+    Name = "Spawn Tp"; -- required: name of element
+    Flag = "MyToggle2"; -- required: unique flag name to use
+    Default = true; -- optional: default value for toggle, will be used if config saving is disabled and there is no saved data, will be false if left nil
+    Callback = function(newValue) -- optional: function that will be called when toggled, it is reccomended to modify flags directly
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Spawns.SpawnLocation.CFrame
+    end;
+    -- Scroll to the bottom of the page to read more about the following two:
+    Warning = "This has a warning"; -- optional: this argument is used in all elements (except for Body) and will indicate text that will appear when the player hovers over the warning icon
+    WarningIcon = 12345; -- optional: ImageAssetId for warning icon, will only be used if Warning is not nil, default is yellow warning icon.
 })
 
-Rayfield:Notify({
-   Title = "Evil",
-   Content = "Like and comment scripts. rscripts.net/u/evilmakio",
-   Duration = 6.5,
-   Image = 4483362458,
-   Actions = { -- Notification Buttons
-      Ignore = {
-         Name = "Okay!",
-         Callback = function()
-         print("The user tapped Okay!")
-      end
-   },
-},
-})
 
-local Tab = Window:CreateTab("Player", 4483362458) -- Title, Image
-
-local Button = Tab:CreateButton({
-   Name = "Invisee",
-   Callback = function()
+MySection:CreateToggle({ -- IMPORTANT: This function does not return anything, please modify flags directly in order to read or update toggle values. SCROLL TO BOTTOM OF PAGE TO SEE HOW TO MODIFY FLAGS
+    Name = "Invisee"; -- required: name of element
+    Flag = "MyToggle"; -- required: unique flag name to use
+    Default = true; -- optional: default value for toggle, will be used if config saving is disabled and there is no saved data, will be false if left nil
+    Callback = function(newValue) -- optional: function that will be called when toggled, it is reccomended to modify flags directly
         game.Players.LocalPlayer.Character.Head.Transparency = 1
         game.Players.LocalPlayer.Character.Torso.Transparency = 1
         game.Players.LocalPlayer.Character.LeftArm.Transparency = 1
         game.Players.LocalPlayer.Character.RightArm.Transparency = 1
         game.Players.LocalPlayer.Character.LeftLeg.Transparency = 1
         game.Players.LocalPlayer.Character.RightLeg.Transparency = 1
-   end,
-})
-local Button = Tab:CreateButton({
-   Name = "NoInvisee",
-   Callback = function()
-        game.Players.LocalPlayer.Character.Head.Transparency = 0
-        game.Players.LocalPlayer.Character.Torso.Transparency = 0
-        game.Players.LocalPlayer.Character.LeftArm.Transparency = 0
-        game.Players.LocalPlayer.Character.RightArm.Transparency = 0
-        game.Players.LocalPlayer.Character.LeftLeg.Transparency = 0
-        game.Players.LocalPlayer.Character.RightLeg.Transparency = 0
-   end,
+    end;
+    -- Scroll to the bottom of the page to read more about the following two:
+    Warning = "This has a warning"; -- optional: this argument is used in all elements (except for Body) and will indicate text that will appear when the player hovers over the warning icon
+    WarningIcon = 12345; -- optional: ImageAssetId for warning icon, will only be used if Warning is not nil, default is yellow warning icon.
 })
 
-local Button = Tab:CreateButton({
-   Name = "On NoClip",
-   Callback = function()
+
+MySection:CreateToggle({ -- IMPORTANT: This function does not return anything, please modify flags directly in order to read or update toggle values. SCROLL TO BOTTOM OF PAGE TO SEE HOW TO MODIFY FLAGS
+    Name = "NoClip"; -- required: name of element
+    Flag = "MyToggle4"; -- required: unique flag name to use
+    Default = true; -- optional: default value for toggle, will be used if config saving is disabled and there is no saved data, will be false if left nil
+    Callback = function(newValue) -- optional: function that will be called when toggled, it is reccomended to modify flags directly
         game.Players.LocalPlayer.Character.Head.CanCollide = false
         game.Players.LocalPlayer.Character.Torso.CanCollide = false
-   end,
+    end;
+    -- Scroll to the bottom of the page to read more about the following two:
+    Warning = "This has a warning"; -- optional: this argument is used in all elements (except for Body) and will indicate text that will appear when the player hovers over the warning icon
+    WarningIcon = 12345; -- optional: ImageAssetId for warning icon, will only be used if Warning is not nil, default is yellow warning icon.
 })
-
-local Button = Tab:CreateButton({
-   Name = "Off NoClip",
-   Callback = function()
-        game.Players.LocalPlayer.Character.Head.CanCollide = true
-        game.Players.LocalPlayer.Character.Torso.CanCollide = true
-   end,
-})
-
-Rayfield:LoadConfiguration()
