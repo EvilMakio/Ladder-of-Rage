@@ -67,15 +67,15 @@ MySection:CreateToggle({
 })
 
 
-MySection:CreateToggle({ -- IMPORTANT: This function does not return anything, please modify flags directly in order to read or update toggle values. SCROLL TO BOTTOM OF PAGE TO SEE HOW TO MODIFY FLAGS
-    Name = "NoClip"; -- required: name of element
-    Flag = "MyToggle4"; -- required: unique flag name to use
-    Default = true; -- optional: default value for toggle, will be used if config saving is disabled and there is no saved data, will be false if left nil
-    Callback = function(newValue) -- optional: function that will be called when toggled, it is reccomended to modify flags directly
+MySection:CreateToggle({ 
+    Name = "NoClip"; 
+    Flag = "MyToggle4"; 
+    Default = true; 
+    Callback = function(newValue) 
         game.Players.LocalPlayer.Character.Head.CanCollide = false
         game.Players.LocalPlayer.Character.Torso.CanCollide = false
     end;
-    -- Scroll to the bottom of the page to read more about the following two:
-    Warning = "This has a warning"; -- optional: this argument is used in all elements (except for Body) and will indicate text that will appear when the player hovers over the warning icon
-    WarningIcon = 12345; -- optional: ImageAssetId for warning icon, will only be used if Warning is not nil, default is yellow warning icon.
+    
+    Warning = "This has a warning"; 
+    WarningIcon = 12345; 
 })
